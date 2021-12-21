@@ -6,8 +6,6 @@ const createToken = async (req, res, next) => {
     const token = await jwt.sign({ browserUser: process.env.STRING_AUTH || 'yep' }, secret, {
       expiresIn: '1h',
     });
-    console.log(token);
-    console.log(jwt.verify(token, secret));
     req.token = token;
     next();
   } catch (error) {
@@ -20,7 +18,6 @@ const checkToken = async (req, res, next) => {
   const token = req.headers.authorization;
   try {
     tokenData = await jwt.verify(token, secret);
-    console.log(tokenData);
     if (
       !tokenData ||
       Date.now() > tokenData.exp * 1000 ||
