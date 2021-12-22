@@ -21,8 +21,7 @@ const checkToken = async (req, res, next) => {
     if (
       !tokenData ||
       Date.now() > tokenData.exp * 1000 ||
-      tokenData.browserUser !== process.env.STRING_AUTH ||
-      'yep'
+      (tokenData.browserUser !== process.env.STRING_AUTH && tokenData.browserUser !== 'yep')
     )
       throw { error: 'unouthorized' };
     next();
